@@ -31,3 +31,28 @@ jobs:
             project: "Landmarks/CreatingAmacOSApp.xcodeproj"
             scheme: MacLandmarks
 
+  build-test-watchos:
+    name: "Build & Test: watchOS"
+    runs-on: macos-10.15
+    timeout-minutes: 15
+    steps:
+      - name: "Checkout Project"
+        uses: actions/checkout@v2
+
+      - name: "Select Xcode 12.0.0"
+        uses: devbotsxyz/xcode-select@master
+        with:
+          version: "12.0.0"
+
+      - name: "Import Certificate: Development"
+        uses: devbotsxyz/import-signing-certificate@v1
+        with:
+          certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
+          certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
+
+      - name: "Build"
+        uses: devbotsxyz/xcode-build@v1
+        with:
+            project: "Landmarks/CreatingAmacOSApp.xcodeproj"
+            scheme: WatchLandmarks
