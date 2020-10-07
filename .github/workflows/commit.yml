@@ -32,7 +32,7 @@ jobs:
             scheme: MacLandmarks
 
   build-test-watchos:
-    name: "Build & Test: watchOS"
+    name: "Build & Test: iOS"
     runs-on: macos-10.15
     timeout-minutes: 15
     steps:
@@ -44,15 +44,9 @@ jobs:
         with:
           version: "12.0.0"
 
-      - name: "Import Certificate: Development"
-        uses: devbotsxyz/import-signing-certificate@v1
-        with:
-          certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
-          certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
-          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
-
       - name: "Build"
-        uses: devbotsxyz/xcode-build@v1
+        uses: devbotsxyz/xcode-build@work
         with:
             project: "Landmarks/CreatingAmacOSApp.xcodeproj"
-            scheme: WatchLandmarks
+            scheme: "Landmarks"
+            destination: "platform=iOS Simulator,name=iPhone 11,OS=14.0"
